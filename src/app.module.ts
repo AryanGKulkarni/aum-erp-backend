@@ -4,7 +4,9 @@ import { AppService } from './app.service';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { ConfigModule } from '@nestjs/config';
 import { ConfigService } from '@nestjs/config';
+import { SeederService } from './seeder/seeder.service';
 import * as Joi from 'joi';
+import { User } from './models/user.model';
 
 @Module({
   imports: [
@@ -32,8 +34,24 @@ import * as Joi from 'joi';
         DB_NAME: Joi.string().required(),
       }),
     }),
+    SequelizeModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        dialect: 'postgres',
+        host: configService.get<string>('DB_HOST'),
+        port: parseInt(configService.get<string>('DB_PORT')),
+        username: configService.get<string>('DB_USERNAME'),
+        password: configService.get<string>('DB_PASSWORD'),
+        database: configService.get<string>('DB_NAME'),
+        models: [User],
+        autoLoadModels: true,
+        synchronize: false, // use migrations!
+      }),
+      inject: [ConfigService],
+    }),
+    SequelizeModule.forFeature([User]),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, SeederService],
 })
 export class AppModule {}
