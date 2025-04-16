@@ -25,7 +25,7 @@ services:
     container_name: erp-backend
     restart: always
     ports:
-      - '3000:3000'
+      - '5000:5000'
     depends_on:
       - postgres
     environment:

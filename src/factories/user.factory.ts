@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
-import { User } from '../models/user.model';
+import { UserModel } from '../models/user.model';
 
-export function generateUserData(): Partial<User> {
+export function generateUserData(): Partial<UserModel> {
   return {
     name: faker.person.fullName(),
     email: faker.internet.email(),

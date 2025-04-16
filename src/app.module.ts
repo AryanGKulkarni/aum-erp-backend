@@ -6,23 +6,16 @@ import { ConfigModule } from '@nestjs/config';
 import { ConfigService } from '@nestjs/config';
 import { SeederService } from './seeder/seeder.service';
 import * as Joi from 'joi';
-import { User } from './models/user.model';
+import { UserModel } from './models/user.model';
+import { SalesModel } from './models/sales.model';
+import { PurchaseModel } from './models/purchase.model';
+import { SalesController } from './sales/sales.controller';
+import { SalesService } from './sales/sales.service';
+import { PurchaseService } from './purchase/purchase.service';
+import { PurchaseController } from './purchase/purchase.controller';
 
 @Module({
   imports: [
-    SequelizeModule.forRootAsync({
-      useFactory: (configService: ConfigService) => ({
-        dialect: 'postgres',
-        host: configService.get('DB_HOST'),
-        port: configService.get<number>('DB_PORT'),
-        username: configService.get('DB_USERNAME'),
-        password: configService.get('DB_PASSWORD'),
-        database: configService.get('DB_NAME'),
-        autoLoadModels: true,
-        synchronize: true,
-      }),
-      inject: [ConfigService],
-    }),
     ConfigModule.forRoot({
       isGlobal: true,
       validationSchema: Joi.object({
@@ -34,6 +27,7 @@ import { User } from './models/user.model';
         DB_NAME: Joi.string().required(),
       }),
     }),
+  
     SequelizeModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
@@ -43,15 +37,16 @@ import { User } from './models/user.model';
         username: configService.get<string>('DB_USERNAME'),
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_NAME'),
-        models: [User],
+        models: [UserModel, SalesModel, PurchaseModel],
         autoLoadModels: true,
-        synchronize: false, // use migrations!
+        synchronize: false,
       }),
       inject: [ConfigService],
     }),
-    SequelizeModule.forFeature([User]),
+  
+    SequelizeModule.forFeature([UserModel, SalesModel, PurchaseModel]),
   ],
-  controllers: [AppController],
-  providers: [AppService, SeederService],
+  controllers: [AppController,SalesController,PurchaseController],
+  providers: [AppService, SeederService,SalesService,PurchaseService],
 })
 export class AppModule {}

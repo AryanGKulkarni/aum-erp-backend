@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { User } from '../models/user.model';
+import { UserModel } from '../models/user.model';
 import { generateUserData } from '../factories/user.factory';
 
 @Injectable()
 export class SeederService {
   constructor(
-    @InjectModel(User)
-    private readonly userModel: typeof User,
+    @InjectModel(UserModel)
+    private readonly userModel: typeof UserModel,
   ) {}
 
   async seedUsers(count = 10) {
