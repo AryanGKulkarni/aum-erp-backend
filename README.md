@@ -1,73 +1,82 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# AUM-ERP Backend
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This is the backend service for the ERP system built with **NestJS**, **PostgreSQL**, **Sequelize**, and **Docker**.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+##  Getting Started
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+### 1. Install Docker
+Make sure you have **Docker** and **Docker Compose** installed.
 
-## Installation
+- [Install Docker](https://docs.docker.com/get-docker/)
+- [Install Docker Compose](https://docs.docker.com/compose/install/)
+
+
+
+### 2. Start Database & Adminer
+Run the following command from the backend root directory:
 
 ```bash
-$ yarn install
+docker-compose up postgres adminer
 ```
+This will start:
 
-## Running the app
+- **PostgreSQL** database server  
+- **Adminer** (web-based DB client) on [http://localhost:8080](http://localhost:8080)
 
-```bash
-# development
-$ yarn run start
+### 3. Adminer Login Credentials
 
-# watch mode
-$ yarn run start:dev
+When logging into **Adminer**, use the following values:
 
-# production mode
-$ yarn run start:prod
-```
+- **System:** PostgreSQL  
+- **Server:** postgres  
+- **Port:** 5432  
+- **Username:** postgres  
+- **Password:** postgres  
+- **Database:** erp
 
-## Test
+### 4. Running the App
 
-```bash
-# unit tests
-$ yarn run test
+- **Build the app**  
+  ```bash
+  yarn build
+- **Format the code**  
+  ```bash
+  yarn format
+- **Start normally**  
+  ```bash
+  yarn start
+- **Start in development mode (watch mode)**  
+  ```bash
+  yarn start:dev
+- **Start with debugging enabled**  
+  ```bash
+  yarn start:debug
+- **Start in production (compiled build)**  
+  ```bash
+  yarn start:prod
 
-# e2e tests
-$ yarn run test:e2e
+### 5. Database Sync
 
-# test coverage
-$ yarn run test:cov
-```
+- **Safe sync (no destructive changes)**  
+  ```bash
+  yarn db:sync
+- **Force sync (drops and recreates all tables)**  
+  ```bash
+  yarn db:sync:force
+- **Alter sync (updates schema without dropping tables)**  
+  ```bash
+  yarn db:sync:alter
 
-## Support
+### 6. Insert Dummy Data (Seeding)
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+- **Insert dummy users**  
+  ```bash
+  yarn seed:users
+- **Insert dummy sales data**  
+  ```bash
+  yarn seed:sales
 
-## Stay in touch
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
 
-## License
-
-Nest is [MIT licensed](LICENSE).
