@@ -5,7 +5,9 @@ import { Sequelize } from 'sequelize-typescript';
 import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    cors: true
+  });
 
   app.setGlobalPrefix('api');
 
