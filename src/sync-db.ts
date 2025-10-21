@@ -1,10 +1,8 @@
 import { Sequelize } from 'sequelize-typescript';
-import { UserModel } from './models/user.model';
-import { SalesModel } from './models/sales.model';
-import { PurchaseModel } from './models/purchase.model';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { MODELS } from './app.providers';
 
 async function syncDB() {
   const appContext = await NestFactory.createApplicationContext(AppModule, {
@@ -19,7 +17,7 @@ async function syncDB() {
     username: configService.get<string>('DB_USERNAME'),
     password: configService.get<string>('DB_PASSWORD'),
     database: configService.get<string>('DB_NAME'),
-    models: [UserModel, SalesModel, PurchaseModel],
+    models: MODELS,
   });
   
   const option = process.argv[2]; // read "force" or "alter" from CLI

@@ -1,25 +1,11 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { ConfigModule } from '@nestjs/config';
 import { ConfigService } from '@nestjs/config';
-import { SeederService } from './seeder/seeder.service';
 import * as Joi from 'joi';
-import { UserModel } from './models/user.model';
-import { SalesModel } from './models/sales.model';
-import { PurchaseModel } from './models/purchase.model';
-import { SalesController } from './sales/sales.controller';
-import { SalesService } from './sales/sales.service';
-import { PurchaseService } from './purchase/purchase.service';
-import { PurchaseController } from './purchase/purchase.controller';
-import { AuthController } from './auth/auth.controller';
-import { AuthService } from './auth/auth.service';
-import { UsersService } from './users/users.service';
-import { LocalStrategy } from './auth/strategies/local.strategy';
-import { JwtStrategy } from './auth/strategies/jwt.strategy';
-import { JwtService } from '@nestjs/jwt';
 import { AuthModule } from './auth/auth.module';
+import { CONTROLLERS, MODELS, SERVICES } from './app.providers';
+import { EnquiryModule } from './enquiry/enquiry.module';
 
 @Module({
   imports: [
@@ -46,31 +32,18 @@ import { AuthModule } from './auth/auth.module';
         username: configService.get<string>('DB_USERNAME'),
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_NAME'),
-        models: [UserModel, SalesModel, PurchaseModel],
+        models: MODELS,
         autoLoadModels: true,
         synchronize: false,
       }),
       inject: [ConfigService],
     }),
 
-    SequelizeModule.forFeature([UserModel, SalesModel, PurchaseModel]),
+    SequelizeModule.forFeature(MODELS),
     AuthModule,
+    EnquiryModule,
   ],
-  controllers: [
-    AppController,
-    SalesController,
-    PurchaseController,
-    AuthController,
-  ],
-  providers: [
-    AppService,
-    SeederService,
-    SalesService,
-    PurchaseService,
-    AuthService,
-    UsersService,
-    LocalStrategy,
-    JwtStrategy,
-  ],
+  controllers: CONTROLLERS,
+  providers: SERVICES,
 })
 export class AppModule {}
