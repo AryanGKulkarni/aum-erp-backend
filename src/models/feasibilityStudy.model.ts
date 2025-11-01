@@ -8,7 +8,6 @@ import {
   Default,
 } from 'sequelize-typescript';
 import { EnquiryModel } from './enquiries.model';
-import { CustomerModel } from './customer.model';
 
 @Table({
   tableName: 'feasibility_studies',
