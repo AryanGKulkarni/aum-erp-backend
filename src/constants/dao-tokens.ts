@@ -1,0 +1,8 @@
+export const USER_DAO = 'USER_DAO';
+export const SALES_DAO = 'SALES_DAO';
+export const PURCHASE_DAO = 'PURCHASE_DAO';
+export const CUSTOMER_DAO = 'CUSTOMER_DAO';
+export const ENQUIRY_DAO = 'ENQUIRY_DAO';
+export const ENQUIRY_ATTACHMENT_DAO = 'ENQUIRY_ATTACHMENT_DAO';
+export const FEASIBILITY_STUDY_DAO = 'FEASIBILITY_STUDY_DAO';
+export const QUOTATION_DAO = 'QUOTATION_DAO';

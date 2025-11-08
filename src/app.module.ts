@@ -6,6 +6,9 @@ import * as Joi from 'joi';
 import { AuthModule } from './auth/auth.module';
 import { CONTROLLERS, MODELS, SERVICES } from './app.providers';
 import { EnquiryModule } from './enquiry/enquiry.module';
+import { DAO_PROVIDERS } from './database/dao-providers';
+import { CustomerModule } from './customer/customer.module';
+import { DaoModule } from './database/dao.module';
 
 @Module({
   imports: [
@@ -40,10 +43,12 @@ import { EnquiryModule } from './enquiry/enquiry.module';
     }),
 
     SequelizeModule.forFeature(MODELS),
+    DaoModule,
     AuthModule,
     EnquiryModule,
+    CustomerModule,
   ],
   controllers: CONTROLLERS,
-  providers: SERVICES,
+  providers: [...SERVICES, ...DAO_PROVIDERS],
 })
 export class AppModule {}
